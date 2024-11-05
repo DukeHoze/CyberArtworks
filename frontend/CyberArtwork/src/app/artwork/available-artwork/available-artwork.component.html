@@ -1,0 +1,8 @@
+<app-artwork-container title="Artworks">
+    @if (artworks()) {
+    <app-artworks [artworks]="artworks()!" />
+    } @else if (artworks()?.length === 0) {
+    <p class="fallback-text">Unfortunately, no places could be found.</p>
+    }
+</app-artwork-container>
+  

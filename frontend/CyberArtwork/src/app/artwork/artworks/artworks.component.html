@@ -1,0 +1,14 @@
+<ul>
+    @for (artwork of artworks(); track artwork.id) {
+      <li class="place-item">
+        <button (click)="onSelectPlace(artwork)">
+          <img
+            [src]=" artwork.image.src"
+            [alt]="artwork.image.alt"
+          />
+          <h3>{{ artwork.title }}</h3>
+        </button>
+      </li>
+    }
+  </ul>
+  <!-- [src]="'http://localhost:3000/' + artwork.image.src" -->

@@ -1,0 +1,36 @@
+<div class="backdrop" (click)="onCancel()"></div>
+<dialog open>
+  <h2>Subir Imagen</h2>
+  <form (ngSubmit)="onSubmit()">
+    <p>
+      <label for="name">Nombre</label>
+      <input #nameInput type="text" id="name" name="name" [(ngModel)]="entereArtworkdName" required />
+    </p>
+
+    <p>
+      <label for="author">Autor</label>
+      <input #authorInput type="text" id="author" name="author" [(ngModel)]="enteredArtworkAuthor" required />
+    </p>
+
+    <p>
+      <label for="category">Categoría</label>
+      <input #categoryInput type="text" id="category" name="category" [(ngModel)]="enteredArtworkCategory" required />
+    </p>
+
+    <p>
+      <label for="image">Cargar Imagen</label>
+      <input id="image" type="file" (change)="onFileSelected($event)" accept="image/*" required />
+    </p>
+
+    <!-- Display the uploaded image preview -->
+     @if (imagePreview) {
+    <p>
+        <img [src]="imagePreview" alt="Image preview" style="max-width: 200px; max-height: 200px;" />
+    </p>
+    }
+    <p class="actions">
+      <button type="button" (click)="onCancel()">Cancelar</button>
+      <button type="submit">Subir</button>
+    </p>
+  </form>
+</dialog>

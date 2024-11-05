@@ -1,0 +1,17 @@
+<header>
+    <img src="assets/header-image.png" alt="Cyber Artwork Logo">
+    <div class="heads">
+        <h1 class="Tittle "data-text="CYBER ARTWORK">CYBER ARTWORK</h1>
+        <p>Trayendote el arte por y para todos.</p>        
+    </div>
+    <div class="Buttons">
+    <button class="loginButton" (click)="onAddUser()">Loging Usuario</button>
+    <button class="loginButtonAdmin" (click)="onAddArtwork()">Login Administrador</button>
+    </div>
+</header>
+@if (isLoginUser) {
+    <app-user-login (cancelLogin)="onCancelAdding()"/>
+}
+@if (isAddingArtwork) {
+    <app-new-artwork (cancelAddArtwork)="onCancelAdding()"/>
+}

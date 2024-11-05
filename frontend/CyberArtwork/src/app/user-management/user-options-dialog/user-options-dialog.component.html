@@ -1,0 +1,22 @@
+<div class="backdrop" (click)="onCancel()"></div>
+<dialog open>
+  <h2>User Options</h2>
+    
+     <p class="actions">
+      <button type="manage" (click)="onUserLogin()">Login</button>
+     </p>
+
+     <p class="actions">
+      <button type="manage" (click)="onAddUser()">New User</button>
+    </p>
+
+    <p class="actions">
+      <button type="manage" (click)="onCancel()">Cancel</button>
+    </p>
+</dialog>
+@if (isLogingUser) {
+    <app-user-login (cancelLogin)="onCancelUserManagement()"/>
+}
+@if (isAddingUser) {
+    <app-new-user (cancelAddUser)="onCancelUserManagement()"/>
+}

@@ -1,0 +1,24 @@
+<div class="backdrop" (click)="onCancel()"></div>
+<dialog open>
+  <h2>User Login</h2>
+  <form (ngSubmit)="loginUser({ email: emailInput.value, password: passwordInput.value })">
+    <p>
+      <label for="email">Email</label>
+      <input #emailInput type="email" id="email" name="email" [(ngModel)]="enteredEmail" required />
+    </p>
+
+    <p>
+      <label for="password">Contraseña</label>
+      <input #passwordInput type="password" id="password" name="password" [(ngModel)]="enteredPassword" required />
+    </p>
+
+    <p class="actions">
+        <button type="button" (click)="onCancel()">Cancelar</button>
+        <button type="management" (click)="onAddUser()">New User</button>
+        <button type="management">Log in</button>
+    </p>
+  </form>
+</dialog>
+@if (isAddingUser) {
+    <app-new-user (cancelAddUser)="onCancelAddingUser()"/>
+}
