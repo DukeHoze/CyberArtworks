@@ -1,11 +1,10 @@
 package com.CyberArtwork.CyberArtworkBackend.services;
 
+import com.CyberArtwork.CyberArtworkBackend.exceptions.InvalidCredentialsException;
 import com.CyberArtwork.CyberArtworkBackend.models.User;
 import com.CyberArtwork.CyberArtworkBackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class UserService {
@@ -20,16 +19,13 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean validateUser(User user){
-         User retrievedUser= userRepository.findByEmail(user.getEmail());
-        System.out.println(user.getEmail());
-        System.out.println(retrievedUser.getName() + "bazinga");
-         if (Objects.equals(retrievedUser.getPassword(), user.getPassword()) && Objects.equals(retrievedUser.getEmail(), user.getEmail())) {
-            return true;
-         }
-         else {
-             return false;
-         }
+    public User validateUser(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new InvalidCredentialsException("El correo electrónico no está registrado"));
 
+        if (!user.getPassword().equals(password)) {
+            throw new InvalidCredentialsException("La contraseña es incorrecta");
+        }
+
+        return user;
     }
 }

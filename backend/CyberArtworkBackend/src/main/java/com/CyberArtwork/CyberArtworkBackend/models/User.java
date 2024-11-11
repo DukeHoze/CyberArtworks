@@ -1,9 +1,9 @@
 package com.CyberArtwork.CyberArtworkBackend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -14,7 +14,23 @@ public class User {
     String surname;
     String email;
     String password;
-    Boolean isAdmin;
+    Boolean isAdmin = false;
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Set<Image> getFavorite() {
+        return favorite;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Boolean getAdmin() {
         return isAdmin;
@@ -51,4 +67,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @ManyToMany
+    @JoinTable(
+            name = "Favorite",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private Set<Image> favorite = new HashSet<>();
 }
