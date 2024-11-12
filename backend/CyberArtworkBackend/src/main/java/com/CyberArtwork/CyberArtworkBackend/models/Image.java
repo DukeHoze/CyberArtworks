@@ -2,8 +2,6 @@ package com.CyberArtwork.CyberArtworkBackend.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 public class Image {
 
@@ -11,7 +9,8 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
+    private String description;
     private String path;
 
     @ManyToOne
@@ -21,10 +20,11 @@ public class Image {
 
     public Image() {}
 
-    public Image(String name, String path, User user) {
-        this.name = name;
+    public Image(String title, String description, String path, User user) {
+        this.title = title;
         this.path = path;
-        this.user = user; // Set the user
+        this.user = user;
+        this.description = description;
     }
 
 
@@ -36,12 +36,20 @@ public class Image {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPath() {

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class ImageService {
@@ -32,7 +32,7 @@ public class ImageService {
     @Value("${app.upload.dir}")
     private String uploadDir;
 
-    public String saveImage(MultipartFile file, Long userId) throws IOException {
+    public String saveImage(MultipartFile file, String title, String description, Long userId) throws IOException {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         File directory = new File(uploadDir);
@@ -44,7 +44,7 @@ public class ImageService {
         Path path = Paths.get(filePath);
         Files.write(path, file.getBytes());
 
-        Image image = new Image(file.getOriginalFilename(), filePath, user);
+        Image image = new Image(title, description, filePath, user);
         imageRepository.save(image);
 
         return filePath;
@@ -55,6 +55,10 @@ public class ImageService {
             throw new RuntimeException("Image not found with ID: " + imageId);
         }
         imageRepository.deleteById(imageId);
+    }
+
+    public List<Image> getAllImages() {
+        return imageRepository.findAll();
     }
 
     @Transactional
