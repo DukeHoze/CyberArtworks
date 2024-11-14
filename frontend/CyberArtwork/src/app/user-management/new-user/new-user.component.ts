@@ -19,7 +19,7 @@ export class NewUserComponent {
   enteredEmail= signal ("");
   enteredPassword= signal ("");
    // URL del endpoint local
-   private apiUrl = 'http://localhost:8080/user/registro';
+   private apiUrl = 'http://localhost:8080/user/signup';
   constructor(private http: HttpClient) {}
   
 

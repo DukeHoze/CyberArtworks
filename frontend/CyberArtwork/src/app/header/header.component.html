@@ -5,12 +5,19 @@
         <p>Trayendote el arte por y para todos.</p>        
     </div>
     <div class="Buttons">
-    <button class="loginButton" (click)="onAddUser()">Loging Usuario</button>
-    <button class="loginButtonAdmin" (click)="onAddArtwork()">Login Administrador</button>
+    @if (!user) {
+        <button class="loginButton" (click)="onAddUser()">Loging Usuario</button>
+    }
+    @if (user) {
+        <button class="logoutButton" (click)="onLogout()">Logout</button>
+    }
+    @if (user && user.is_admin) {
+        <button class="addArtworkButton" (click)="onAddArtwork()">Añadir Arte</button>
+    }
     </div>
 </header>
 @if (isLoginUser) {
-    <app-user-login (cancelLogin)="onCancelAdding()"/>
+    <app-user-login (cancelLogin)="onCancelAdding()" (successfulLogin)="onLogged()"/>
 }
 @if (isAddingArtwork) {
     <app-new-artwork (cancelAddArtwork)="onCancelAdding()"/>

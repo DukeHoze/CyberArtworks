@@ -1,17 +1,17 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { ArtworksComponent } from "../artworks/artworks.component";
-import { ArtworkContainerComponent } from "../artwork-container/artwork-container.component";
 import { Artwork } from '../artwork.model';
 import { HttpClient } from '@angular/common/http';
+import { ArtworkContainerComponent } from "../artwork-container/artwork-container.component";
+import { ArtworksComponent } from "../artworks/artworks.component";
 
 @Component({
-  selector: 'app-available-artwork',
+  selector: 'app-favorite-artworks',
   standalone: true,
-  imports: [ArtworksComponent, ArtworkContainerComponent],
-  templateUrl: './available-artwork.component.html',
-  styleUrl: './available-artwork.component.css'
+  imports: [ArtworkContainerComponent, ArtworksComponent],
+  templateUrl: './favorite-artworks.component.html',
+  styleUrl: './favorite-artworks.component.css'
 })
-export class AvailableArtworkComponent implements OnInit {
+export class FavoriteArtworksComponent implements OnInit {
   private httpClient = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
   private apiUrl = 'http://localhost:8080/usuario/sax';
@@ -81,3 +81,4 @@ export class AvailableArtworkComponent implements OnInit {
     
   }
 }
+

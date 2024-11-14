@@ -80,7 +80,7 @@ header p {
     max-width: 600px;
 }
 
-.loginButton {
+.loginButton, .logoutButton {
     background-color: #4a148c; /* Color de fondo púrpura oscuro */
     color: #ffffff;            /* Texto en blanco */
     font-size: 1rem;           /* Tamaño de fuente */
@@ -93,9 +93,9 @@ header p {
     text-align: center;
 }
 
-.loginButtonAdmin{
-    background-color: #4a148c; /* Color de fondo púrpura oscuro */
-    color: #ffffff;            /* Texto en blanco */
+.addArtworkButton{
+    background-color: #E5E4E2; /* Color de fondo púrpura oscuro */
+    color: #c9db1f;            /* Texto en blanco */
     font-size: 1rem;           /* Tamaño de fuente */
     padding: 0.75rem 1.5rem;   /* Espaciado interno */
     border: none;              /* Sin borde */
