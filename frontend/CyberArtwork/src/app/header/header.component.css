@@ -56,18 +56,22 @@ header img {
     {
         width: 0;
         color: #ffd303;
+        border-right: 2px solid #ffd303;
     }
     50%,60%
     {
         color: #ff7e01;
+        border-right: 2px solid #ff7e01;
     }
     70%, 80%
     {
         color:#00fef6 ;
+        border-right: 2px solid #00fef6;
     }
     85%, 90%
     {
         color: #00fe70;
+        border-right: 2px solid #00fe70;
         width: 100%;
     }
 }

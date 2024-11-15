@@ -1,7 +1,7 @@
 package com.CyberArtwork.CyberArtworkBackend.controllers;
 
-import com.CyberArtwork.CyberArtworkBackend.models.Image;
-import com.CyberArtwork.CyberArtworkBackend.services.ImageService;
+import com.CyberArtwork.CyberArtworkBackend.models.Artwork;
+import com.CyberArtwork.CyberArtworkBackend.services.ArtworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,33 +15,51 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/images")
-public class ImageController {
+public class ArtworkController {
 
-    private final ImageService imageService;
+    private final ArtworkService artworkService;
 
     @Autowired
-    public ImageController(ImageService imageService) {
-        this.imageService = imageService;
+    public ArtworkController(ArtworkService artworkService) {
+        this.artworkService = artworkService;
     }
 
     @PostMapping("/upload")
+    public ResponseEntity<Map<String, String>> uploadArtwork(@RequestParam("file") MultipartFile file,
+                                                           @RequestParam("title") String title,
+                                                           @RequestParam("description") String description,
+                                                           @RequestParam("author") String author,
+                                                           @RequestParam("userId") Long userId) {
+        try {
+            String filePath = artworkService.saveArtwork(file, title, description, author, userId);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Obra subida exitosamente");
+            response.put("filePath", filePath);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body(Map.of("error", "Error al subir la obra."));
+        }
+    }
+
+    /* @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file,
                                               @RequestParam("title") String title,
                                               @RequestParam("description") String description,
+                                              @RequestParam("author") String author,
                                               @RequestParam("userId") Long userId) {
         try {
-            String filePath = imageService.saveImage(file, title, description, userId);
+            String filePath = artworkService.saveImage(file, title, description, author, userId);
             return ResponseEntity.ok("Imagen subida exitosamente: " + filePath);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Error al subir la imagen");
         }
     }
-
+    */
     @PostMapping("/favorite")
     public ResponseEntity<String> toggleFavorite(@RequestParam("userId") Long userId,
                                                  @RequestParam("imageId") Long imageId) {
         try {
-            String response = imageService.toggleFavorite(userId, imageId);
+            String response = artworkService.toggleFavorite(userId, imageId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error: " + e.getMessage());
@@ -49,15 +67,16 @@ public class ImageController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getAllImages() {
-        List<Image> images = imageService.getAllImages();
+    public ResponseEntity<List<Map<String, Object>>> getAllArtworks() {
+        List<Artwork> artworks = artworkService.getAllArtworks();
 
-        List<Map<String, Object>> response = images.stream()
+        List<Map<String, Object>> response = artworks.stream()
                 .map(image -> {
                     Map<String, Object> imageMap = new HashMap<>();
                     imageMap.put("title", image.getTitle());
                     imageMap.put("description", image.getDescription());
                     imageMap.put("id", image.getId());
+                    imageMap.put("author", image.getAuthor());
                     imageMap.put("user", image.getUser().getName());
                     imageMap.put("path", image.getPath());
                     return imageMap;
@@ -68,10 +87,10 @@ public class ImageController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteImage(@PathVariable("id") Long imageId) {
+    public ResponseEntity<String> deleteArtwork(@PathVariable("id") Long imageId) {
         try {
-            imageService.deleteImageById(imageId);
-            return ResponseEntity.ok("Image deleted successfully");
+            artworkService.deleteArtworkbyId(imageId);
+            return ResponseEntity.ok("Artwork deleted successfully");
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }

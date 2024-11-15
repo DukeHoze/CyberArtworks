@@ -21,7 +21,7 @@ export class FavoriteArtworksComponent implements OnInit {
       id: "1",
       title: "Sunset Harmony",
       author: "Ana García",
-      category: "Paisaje",
+      description: "Paisaje",
       image: {
         src: "/assets/amazon-river.jpg",
         alt: "Un hermoso atardecer sobre el mar"
@@ -31,7 +31,7 @@ export class FavoriteArtworksComponent implements OnInit {
       id: "2",
       title: "Abstract Reflections",
       author: "Luis Rodríguez",
-      category: "Abstracto",
+      description: "Abstracto",
       image: {
         src: "/assets/amazon-river.jpg",
         alt: "Una pintura abstracta llena de colores vibrantesSELVA"
@@ -41,7 +41,7 @@ export class FavoriteArtworksComponent implements OnInit {
       id: "3",
       title: "City Lights",
       author: "Carmen Santos",
-      category: "Urbano",
+      description: "Urbano",
       image: {
         src: "/assets/ruins.jpg",
         alt: "Vista nocturna de una ciudad iluminada"
@@ -51,7 +51,7 @@ export class FavoriteArtworksComponent implements OnInit {
       id: "4",
       title: "Nature's Whisper",
       author: "José Martínez",
-      category: "Naturaleza",
+      description: "Naturaleza",
       image: {
         src: "/assets/rainforest.jpg",
         alt: "Una escena tranquila en un bosque"

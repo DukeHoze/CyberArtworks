@@ -3,6 +3,7 @@ export interface BackendResponse {
     email: string;
     isAdmin: boolean;
     name: string;
+    surname: string;
     favoriteImageIds: any[];
   }
 

@@ -4,17 +4,17 @@
   <form (ngSubmit)="onSubmit()">
     <p>
       <label for="name">Nombre</label>
-      <input #nameInput type="text" id="name" name="name" [(ngModel)]="entereArtworkdName" required />
+      <input type="text" id="name" name="name" [(ngModel)]="enteredArtworkTitle" required />
     </p>
 
     <p>
       <label for="author">Autor</label>
-      <input #authorInput type="text" id="author" name="author" [(ngModel)]="enteredArtworkAuthor" required />
+      <input type="text" id="author" name="author" [(ngModel)]="enteredArtworkAuthor" required />
     </p>
 
     <p>
-      <label for="category">Categoría</label>
-      <input #categoryInput type="text" id="category" name="category" [(ngModel)]="enteredArtworkCategory" required />
+      <label for="category">Descripcion</label>
+      <input type="text" id="category" name="category" [(ngModel)]="enteredArtworkDescription" required />
     </p>
 
     <p>

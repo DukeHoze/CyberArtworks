@@ -2,7 +2,7 @@ export interface Artwork {
     id:string;
     title: string;
     author: string;
-    category: string;
+    description: string;
     image: {
       src: string;
       alt: string;

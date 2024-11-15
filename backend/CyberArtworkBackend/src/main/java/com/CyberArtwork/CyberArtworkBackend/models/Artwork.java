@@ -3,7 +3,7 @@ package com.CyberArtwork.CyberArtworkBackend.models;
 import jakarta.persistence.*;
 
 @Entity
-public class Image {
+public class Artwork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,19 +12,21 @@ public class Image {
     private String title;
     private String description;
     private String path;
+    private String author;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
 
-    public Image() {}
+    public Artwork() {}
 
-    public Image(String title, String description, String path, User user) {
+    public Artwork(String title,String author, String description, String path, User user) {
         this.title = title;
+        this.author = author;
+        this.description = description;
         this.path = path;
         this.user = user;
-        this.description = description;
     }
 
 
@@ -66,5 +68,13 @@ public class Image {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

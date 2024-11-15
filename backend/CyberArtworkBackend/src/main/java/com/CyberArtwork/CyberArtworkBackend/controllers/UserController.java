@@ -1,6 +1,6 @@
 package com.CyberArtwork.CyberArtworkBackend.controllers;
 
-import com.CyberArtwork.CyberArtworkBackend.models.Image;
+import com.CyberArtwork.CyberArtworkBackend.models.Artwork;
 import com.CyberArtwork.CyberArtworkBackend.models.User;
 import com.CyberArtwork.CyberArtworkBackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +35,17 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> loginUser(@RequestBody User user) {
         User loggedUser = userService.validateUser(user.getEmail(), user.getPassword());
 
-        Set<Long> favoriteImageIds = loggedUser.getFavorite().stream()
-                .map(Image::getId)
+        Set<Long> favoriteArtworkIds = loggedUser.getFavorite().stream()
+                .map(Artwork::getId)
                 .collect(Collectors.toSet());
 
         Map<String, Object> response = Map.of(
                 "userId", loggedUser.getId(),
                 "name", loggedUser.getName(),
+                "surname", loggedUser.getSurname(),
                 "email", loggedUser.getEmail(),
                 "isAdmin", loggedUser.getAdmin(),
-                "favoriteImageIds", favoriteImageIds
+                "favoriteArtworkIds", favoriteArtworkIds
         );
 
         return ResponseEntity.ok(response);

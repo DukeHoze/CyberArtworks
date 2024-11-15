@@ -54,8 +54,8 @@ export class UserLoginComponent {
           email: response.email,
           is_admin: response.isAdmin,
           name: response.name,
+          surname: response.surname,
           password: '', // optional or placeholder
-          surname: ''   // optional
         };
 
         // Store the transformed user data

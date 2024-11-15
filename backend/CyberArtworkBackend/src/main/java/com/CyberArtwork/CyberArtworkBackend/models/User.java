@@ -20,7 +20,7 @@ public class User {
         isAdmin = admin;
     }
 
-    public Set<Image> getFavorite() {
+    public Set<Artwork> getFavorite() {
         return favorite;
     }
 
@@ -74,5 +74,5 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id")
     )
-    private Set<Image> favorite = new HashSet<>();
+    private Set<Artwork> favorite = new HashSet<>();
 }

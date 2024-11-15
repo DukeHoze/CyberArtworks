@@ -3,6 +3,8 @@ import { ArtworksComponent } from "../artworks/artworks.component";
 import { ArtworkContainerComponent } from "../artwork-container/artwork-container.component";
 import { Artwork } from '../artwork.model';
 import { HttpClient } from '@angular/common/http';
+import { ArtworksService } from '../artworks.service';
+import { AuthService } from '../../user-management/auth.service';
 
 @Component({
   selector: 'app-available-artwork',
@@ -21,7 +23,7 @@ export class AvailableArtworkComponent implements OnInit {
       id: "1",
       title: "Sunset Harmony",
       author: "Ana García",
-      category: "Paisaje",
+      description: "Paisaje",
       image: {
         src: "/assets/amazon-river.jpg",
         alt: "Un hermoso atardecer sobre el mar"
@@ -31,7 +33,7 @@ export class AvailableArtworkComponent implements OnInit {
       id: "2",
       title: "Abstract Reflections",
       author: "Luis Rodríguez",
-      category: "Abstracto",
+      description: "Abstracto",
       image: {
         src: "/assets/amazon-river.jpg",
         alt: "Una pintura abstracta llena de colores vibrantesSELVA"
@@ -41,7 +43,7 @@ export class AvailableArtworkComponent implements OnInit {
       id: "3",
       title: "City Lights",
       author: "Carmen Santos",
-      category: "Urbano",
+      description: "Urbano",
       image: {
         src: "/assets/ruins.jpg",
         alt: "Vista nocturna de una ciudad iluminada"
@@ -51,7 +53,7 @@ export class AvailableArtworkComponent implements OnInit {
       id: "4",
       title: "Nature's Whisper",
       author: "José Martínez",
-      category: "Naturaleza",
+      description: "Naturaleza",
       image: {
         src: "/assets/rainforest.jpg",
         alt: "Una escena tranquila en un bosque"
@@ -59,10 +61,11 @@ export class AvailableArtworkComponent implements OnInit {
     }
   ]);
 
-  
+  constructor(private artworksService: ArtworksService, private authService: AuthService) {}
 
   ngOnInit(){
-    this.isFetching.set(true);
+    this.loadArtworks();
+    /* this.isFetching.set(true);
     const subscribtion = this.httpClient.get<{artworks: Artwork[]}>(this.apiUrl).subscribe({
       next: (restposeData) => {
         console.log(restposeData.artworks);
@@ -74,7 +77,19 @@ export class AvailableArtworkComponent implements OnInit {
     });
     this.destroyRef.onDestroy(() =>{
       subscribtion.unsubscribe();
-    });
+    }); */
+  }
+
+  loadArtworks(): void {
+    this.artworksService.getAllArtworks().subscribe({
+      next: (data) => {
+        this.artworks.set(data); // Update the signal with the fetched artworks
+      },
+      error: (error) => {
+        console.error('Error uploading image:', error);
+        //this.errorMessage = 'There was an error loading the artworks: ' + error.message;
+      }
+    }); 
   }
 
   onSelectArtwork (selectArtwork: Artwork) {

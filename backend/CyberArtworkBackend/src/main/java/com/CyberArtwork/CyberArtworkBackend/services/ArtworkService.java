@@ -1,8 +1,8 @@
 package com.CyberArtwork.CyberArtworkBackend.services;
 
-import com.CyberArtwork.CyberArtworkBackend.models.Image;
+import com.CyberArtwork.CyberArtworkBackend.models.Artwork;
 import com.CyberArtwork.CyberArtworkBackend.models.User;
-import com.CyberArtwork.CyberArtworkBackend.repository.ImageRepository;
+import com.CyberArtwork.CyberArtworkBackend.repository.ArtworkRepository;
 import com.CyberArtwork.CyberArtworkBackend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,21 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Service
-public class ImageService {
+public class ArtworkService {
 
-    private final ImageRepository imageRepository;
+    private final ArtworkRepository artworkRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public ImageService(ImageRepository imageRepository, UserRepository userRepository) {
-        this.imageRepository = imageRepository;
+    public ArtworkService(ArtworkRepository artworkRepository, UserRepository userRepository) {
+        this.artworkRepository = artworkRepository;
         this.userRepository = userRepository;
     }
 
     @Value("${app.upload.dir}")
     private String uploadDir;
 
-    public String saveImage(MultipartFile file, String title, String description, Long userId) throws IOException {
+    public String saveArtwork(MultipartFile file, String title, String description, String author, Long userId) throws IOException {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         File directory = new File(uploadDir);
@@ -44,35 +44,35 @@ public class ImageService {
         Path path = Paths.get(filePath);
         Files.write(path, file.getBytes());
 
-        Image image = new Image(title, description, filePath, user);
-        imageRepository.save(image);
+        Artwork artwork = new Artwork(title, description, author, filePath, user);
+        artworkRepository.save(artwork);
 
         return filePath;
     }
 
-    public void deleteImageById(Long imageId) {
-        if (!imageRepository.existsById(imageId)) {
-            throw new RuntimeException("Image not found with ID: " + imageId);
+    public void deleteArtworkbyId(Long imageId) {
+        if (!artworkRepository.existsById(imageId)) {
+            throw new RuntimeException("Artwork not found with ID: " + imageId);
         }
-        imageRepository.deleteById(imageId);
+        artworkRepository.deleteById(imageId);
     }
 
-    public List<Image> getAllImages() {
-        return imageRepository.findAll();
+    public List<Artwork> getAllArtworks() {
+        return artworkRepository.findAll();
     }
 
     @Transactional
     public String toggleFavorite(Long userId, Long imageId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        Image image = imageRepository.findById(imageId).orElseThrow(() -> new RuntimeException("Image not found"));
+        Artwork artwork = artworkRepository.findById(imageId).orElseThrow(() -> new RuntimeException("Artwork not found"));
 
-        if (user.getFavorite().contains(image)) {
-            user.getFavorite().remove(image);
-            return "Image removed from favorites";
+        if (user.getFavorite().contains(artwork)) {
+            user.getFavorite().remove(artwork);
+            return "Artwork removed from favorites";
         } else {
-            user.getFavorite().add(image);
-            return "Image added to favorites";
+            user.getFavorite().add(artwork);
+            return "Artwork added to favorites";
         }
     }
 }

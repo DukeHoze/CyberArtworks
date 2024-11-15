@@ -17,6 +17,7 @@ export class HeaderComponent {
   user: UserData | null = null; // Adjust type if needed
   isLoginUser = false;
   isAddingArtwork = false;
+  headerSubText: string= "Trayendote el arte por y para todos."
 
   constructor(private authService: AuthService) {
     this.user = this.authService.getUserData(); // Initialize user here
@@ -32,7 +33,8 @@ export class HeaderComponent {
 
   onLogged() {
     this.user = this.authService.getUserData() || this.user; // Refresh user data
-  
+    this.headerSubText = "Welcome to Cyber Artwork: " + this.user?.name + " " + this.user?.surname;
+    this.isLoginUser = false;
     // Log the user object as a JSON string to display its full structure
     console.log("Bazinga", JSON.stringify(this.user, null, 2) + this.user?.email);
   }
